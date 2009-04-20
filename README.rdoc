@@ -1,7 +1,0 @@
-= dl-fughley
-
-Description goes here.
-
-== Copyright
-
-Copyright (c) 2009 robincurry. See LICENSE for details.
