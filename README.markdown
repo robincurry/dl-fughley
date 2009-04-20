@@ -2,7 +2,7 @@
 
 Note - this project is still in its infacy and probably not quite ready for production use. Check back soon...
 
-# Use named scopes, finders, or other methods as a distribution list
+## Use named scopes, finders, or other methods as a distribution list
 
 	class Person < ActiveRecord::Base
 	  is_dl :all  	# results in a dl for all@yourdomain.com
@@ -20,7 +20,7 @@ Note - this project is still in its infacy and probably not quite ready for prod
 
 
 
-# Or, use dl_missing to handle more complex scenarios
+## Or, use dl_missing to handle more complex scenarios
 
 	class Person < ActiveRecord::Base
 	  is_dl
@@ -32,7 +32,7 @@ Note - this project is still in its infacy and probably not quite ready for prod
 
 
 
-# Control who can send to the distribution list
+## Control who can send to the distribution list
 
 	class Person < ActiveRecord::Base
 	  is_dl :all, :allow => [:members]  # allow emails from anyone included in the distribution list.
@@ -41,7 +41,7 @@ Note - this project is still in its infacy and probably not quite ready for prod
 
 
 
-# Munge replies to send them back to the distribution list
+## Munge replies to send them back to the distribution list
 
 	class Person < ActiveRecord::Base
 	  is_dl :all, :reply_to => :list  # replies will be sent to all@yourdomain.com
@@ -49,7 +49,7 @@ Note - this project is still in its infacy and probably not quite ready for prod
 
 
 
-# Use a different from address for emails sent to distribution list
+## Use a different from address for emails sent to distribution list
 
 	class Person < ActiveRecord::Base
 	  is_dl :all, :from => 'info@yourdomain.com'  # emails to group will come from info@yourdomain.com rather than original sender.
@@ -57,7 +57,7 @@ Note - this project is still in its infacy and probably not quite ready for prod
 
 
 
-# Add a subject prefix to all new emails to distribution list
+## Add a subject prefix to all new emails to distribution list
 
 	class Person < ActiveRecord::Base
 	  is_dl :all, :subject_prefix => 'info'  # Will prefix subjects with "[info]"
@@ -66,6 +66,6 @@ Note - this project is still in its infacy and probably not quite ready for prod
 
 
 
-# Copyright
+## Copyright
 
 Copyright (c) 2009 Robin Curry. See LICENSE for details.
