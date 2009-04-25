@@ -44,9 +44,9 @@ module DL
         options = {
           :allow => [],
           :email_field => :email,
-          :reply_to => :sender
+          :reply_to => :sender 
           }.merge!(people.extract_options!)
-          
+
           people.flatten!
 
           if (options[:allow].nil? || options[:allow].empty?) || 
@@ -58,7 +58,7 @@ module DL
               email.reply_to = email.from if options[:reply_to] == :sender
               email.reply_to = to if options[:reply_to] == :list
               email.from = options[:from] if options[:from]
-              
+
               case options[:subject_prefix]
               when :list_name
                 email.subject = "[#{list.downcase}] #{email.subject}" unless email.subject =~ /\[#{list}\]/i
@@ -67,15 +67,18 @@ module DL
               else
                 email.subject = "[#{options[:subject_prefix]}] #{email.subject}" unless email.subject =~ /\[#{options[:subject_prefix]}\]/i
               end
-              
 
-              ActionMailer::Base.deliver(email)
+              # yield to block if given, otherwise, go ahead and send the email using ActionMailer.
+              if block_given?
+                yield person, email
+              else 
+                ActionMailer::Base.deliver(email)
+              end
             end
           end
         end
       end
-    end
-    
+    end 
   end
 
   ActiveRecord::Base.send(:include, DL::Fughley)

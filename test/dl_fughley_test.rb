@@ -446,6 +446,48 @@ class DlFughleyTest < ActiveSupport::TestCase
     end
   end
   
+  context "distribute" do
+    setup do
+      Factory(:person)
+      Person.is_dl(:all)
+
+      # Reset deliveries during setup. Otherwise they will accumulate after each test.
+      ActionMailer::Base.deliveries = []
+
+      @email = to_email(
+      :from => 'user@example.com', 
+      :to => 'all@example.com', 
+      :subject => 're: [all-my-peeps] test to the whole group', 
+      :body => 'Hello everybody!')
+    end
+
+    context "default" do
+      setup do
+        Person.distribute(@email)
+      end
+
+      should "send email via ActionMailer to each member of dl" do
+        assert_deliveries Person.count
+      end
+    end
+
+    context "with block" do
+      setup do
+        @count = 0
+        Person.distribute(@email) {|person, email| @count = @count+1 }
+      end
+      
+      should "yield each person and email to the block" do
+        assert @count == Person.count
+      end
+    
+      should "not send via ActionMailer (unless called by block)" do
+        assert_deliveries 0
+      end
+    end
+  end
+  
+
   
   private
     def to_email(values)
